@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TerrariEdit</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="item_prefixes">
+        <item>Large</item>
+        <item>Massive</item>
+        <item>Dangerous</item>
+        <item>Savage</item>
+        <item>Sharp</item>
+        <item>Pointy</item>
+        <item>Tiny</item>
+        <item>Terrible</item>
+        <item>Small</item>
+        <item>Dull</item>
+        <item>Unhappy</item>
+        <item>Bulky</item>
+        <item>Shameful</item>
+        <item>Heavy</item>
+        <item>Light</item>
+        <item>Sighted</item>
+        <item>Rapid</item>
+        <item>Hasty</item>
+        <item>Intimidating</item>
+        <item>Deadly</item>
+        <item>Staunch</item>
+        <item>Awful</item>
+        <item>Lethargic</item>
+        <item>Awkward</item>
+        <item>Powerful</item>
+        <item>Mystic</item>
+        <item>Adept</item>
+        <item>Masterful</item>
+        <item>Inept</item>
+        <item>Ignorant</item>
+        <item>Deranged</item>
+        <item>Intense</item>
+        <item>Taboo</item>
+        <item>Celestial</item>
+        <item>Furious</item>
+        <item>Keen</item>
+        <item>Superior</item>
+        <item>Forceful</item>
+        <item>Broken</item>
+        <item>Damaged</item>
+        <item>Shoddy</item>
+        <item>Quick</item>
+        <item>Deadly</item>
+        <item>Agile</item>
+        <item>Nimble</item>
+        <item>Murderous</item>
+        <item>Slow</item>
+        <item>Sluggish</item>
+        <item>Lazy</item>
+        <item>Annoying</item>
+        <item>Nasty</item>
+        <item>Manic</item>
+        <item>Hurtful</item>
+        <item>Strong</item>
+        <item>Unpleasant</item>
+        <item>Weak</item>
+        <item>Ruthless</item>
+        <item>Frenzying</item>
+        <item>Godly</item>
+        <item>Demonic</item>
+        <item>Zealous</item>
+        <item>Hard</item>
+        <item>Guarding</item>
+        <item>Armored</item>
+        <item>Warding</item>
+        <item>Arcane</item>
+        <item>Precise</item>
+        <item>Lucky</item>
+        <item>Jagged</item>
+        <item>Spiked</item>
+        <item>Angry</item>
+        <item>Menacing</item>
+        <item>Brisk</item>
+        <item>Fleeting</item>
+        <item>Hasty</item>
+        <item>Quick</item>
+        <item>Wild</item>
+        <item>Rash</item>
+        <item>Intrepid</item>
+        <item>Violent</item>
+        <item>Legendary</item>
+        <item>Unreal</item>
+        <item>Mythical</item>
+    </string-array>
+
+</resources>
