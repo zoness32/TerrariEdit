@@ -4,7 +4,6 @@
     <string name="app_name">TerrariEdit</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
     <string-array name="item_prefixes">
         <item>Large</item>
         <item>Massive</item>
@@ -89,24 +88,6 @@
         <item>Legendary</item>
         <item>Unreal</item>
         <item>Mythical</item>
-    </string-array>
-
-    <string-array name="item_categories">
-        <item>Pickaxes</item>
-        <item>Swords</item>
-        <item>Axes</item>
-        <item>Flails</item>
-        <item>Bows</item>
-        <item>Guns</item>
-        <item>Repeaters</item>
-        <item>Staffs</item>
-        <item>Melee Weapons</item>
-        <item>Ranged Weapons</item>
-        <item>Magic Weapons</item>
-        <item>Armor</item>
-        <item>Helmets</item>
-        <item>Breastplates</item>
-        <item>Leggings</item>
     </string-array>
 
 </resources>
