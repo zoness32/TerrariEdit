@@ -1,8 +1,10 @@
 package app.terrariedit;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -74,6 +78,19 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_init_db) {
+            DataBaseHelper dbHelper = new DataBaseHelper(this);
+            try {
+                dbHelper.createDataBase();
+            } catch (IOException e) {
+                Log.e("IO Exception", "Unable to create database");
+            }
+
+            try {
+                dbHelper.openDataBase();
+            } catch (SQLException e) {
+                Log.e("SQL Exception", e.getMessage());
+            }
         }
 
         return super.onOptionsItemSelected(item);
