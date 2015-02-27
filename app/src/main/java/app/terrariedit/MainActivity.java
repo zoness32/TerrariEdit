@@ -1,6 +1,7 @@
 package app.terrariedit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,6 +32,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView itemNameText;
     private ImageView itemImage;
     private GridView gridview;
+    private MainActivity self = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,13 @@ public class MainActivity extends ActionBarActivity {
         prefixSpinner.setAdapter(adapter);
 
         itemNameText = (TextView) findViewById(R.id.itemName);
+        itemNameText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(self, ItemSelectionActivity.class);
+                startActivity(newIntent);
+            }
+        });
         itemImage = (ImageView) findViewById(R.id.itemImage);
 
         gridview = (GridView) findViewById(R.id.gridView);
