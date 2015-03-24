@@ -40,7 +40,16 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         itemDetailsView = findViewById(R.id.itemDetailsPanel);
+
         editButton = (Button) findViewById(R.id.editButton);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(self, ItemSelectionActivity.class);
+                startActivity(newIntent);
+            }
+        });
+
         countTextEdit = (EditText) findViewById(R.id.countTextEdit);
 
         prefixSpinner = (Spinner) findViewById(R.id.prefixSpinner);
@@ -49,13 +58,7 @@ public class MainActivity extends ActionBarActivity {
         prefixSpinner.setAdapter(adapter);
 
         itemNameText = (TextView) findViewById(R.id.itemName);
-        itemNameText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(self, ItemSelectionActivity.class);
-                startActivity(newIntent);
-            }
-        });
+
         itemImage = (ImageView) findViewById(R.id.itemImage);
 
         gridview = (GridView) findViewById(R.id.gridView);
