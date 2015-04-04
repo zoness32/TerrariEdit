@@ -3,6 +3,7 @@ package app.terrariedit;
 import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -10,29 +11,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
     private View itemDetailsView;
-    private Button editButton;
-    private EditText countTextEdit;
-    private Spinner prefixSpinner;
-    private TextView itemNameText;
-    private ImageView itemImage;
+    private Button itemEditButton;
+    public EditText itemCountText;
+    private Spinner itemPrefixSpinner;
+    public TextView itemNameText;
+    public ImageView itemImage;
     private GridView gridview;
     private MainActivity self = this;
+    private List<Item> itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +44,8 @@ public class MainActivity extends ActionBarActivity {
 
         itemDetailsView = findViewById(R.id.itemDetailsPanel);
 
-        editButton = (Button) findViewById(R.id.editButton);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        itemEditButton = (Button) findViewById(R.id.itemEdit);
+        itemEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(self, ItemSelectionActivity.class);
@@ -50,26 +53,20 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        countTextEdit = (EditText) findViewById(R.id.countTextEdit);
+        itemCountText = (EditText) findViewById(R.id.itemCount);
 
-        prefixSpinner = (Spinner) findViewById(R.id.prefixSpinner);
+        itemPrefixSpinner = (Spinner) findViewById(R.id.itemPrefix);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.item_prefixes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        prefixSpinner.setAdapter(adapter);
+        itemPrefixSpinner.setAdapter(adapter);
 
         itemNameText = (TextView) findViewById(R.id.itemName);
 
         itemImage = (ImageView) findViewById(R.id.itemImage);
 
         gridview = (GridView) findViewById(R.id.gridView);
-        gridview.setAdapter(new ImageAdapter(this));
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
+        itemsList = new ArrayList<>();
     }
 
 
@@ -91,53 +88,109 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_init_db) {
-            DataBaseHelper dbHelper = new DataBaseHelper(this);
-            try {
-                dbHelper.createDataBase();
-            } catch (IOException e) {
-                Log.e("IO Exception", "Unable to create database");
-            }
-
-            try {
-                dbHelper.openDataBase();
-            } catch (SQLException e) {
-                Log.e("SQL Exception", e.getMessage());
-            }
+            initDB();
+        } else if (id == R.id.action_open_file) {
+            openFile();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public class ImageAdapter extends BaseAdapter {
-        private Context mContext;
-        private int i = 0;
-
-        public ImageAdapter(Context c) {
-            mContext = c;
+    private void openFile() {
+        PlayerFileParser parser = new PlayerFileParser(this);
+        byte[] bin = new byte[0];
+        try {
+            bin = parser.readFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        byte[][] binItems = parser.parseInput(bin);
+        ItemsDataSource ids = new ItemsDataSource(this);
+        PrefixDataSource pds = new PrefixDataSource(this);
+        ids.open();
+        pds.open();
+
+        for (int i = 0; i < binItems.length; i++) {
+            Item it = ItemParser.ParseItem(binItems[i]);
+            it.setName(ids.getItemName(Integer.valueOf(it.getId())));
+            it.setPrefix(pds.getPrefixName(Integer.valueOf(it.getPrefix())));
+            itemsList.add(it);
+
+            //TODO: remove log once UI is connected
+            Log.d("Item:", it.toString());
+        }
+
+        ids.close();
+        pds.close();
+        gridview.setAdapter(new ImageAdapter(this, itemsList));
+    }
+
+    private void initDB() {
+        DataBaseHelper dbHelper = new DataBaseHelper(this);
+        try {
+            dbHelper.createDataBase();
+        } catch (IOException e) {
+            Log.e("IO Exception", "Unable to create database");
+        }
+
+        try {
+            dbHelper.openDataBase();
+        } catch (SQLException e) {
+            Log.e("SQL Exception", e.getMessage());
+        }
+    }
+
+    public class ImageAdapter extends BaseAdapter {
+        private List<ImageButton> buttons;
+        private List<Item> items;
+        private Context c;
+
+        public ImageAdapter(Context context, List<Item> itemList) {
+            c = context;
+            items = itemList;
+        }
+
+        @Override
         public int getCount() {
             return 40;
         }
 
+        @Override
         public Object getItem(int position) {
-            return null;
+            return buttons.get(position);
         }
 
+        @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Button button;
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ImageButton b;
             if (convertView == null) {
-                button = new Button(mContext);
-                button.setLayoutParams(new GridView.LayoutParams(100, 100));
+                b = new ImageButton(c);
+                b.setLayoutParams(new GridView.LayoutParams(100, 100));
+                ViewGroup.LayoutParams params = b.getLayoutParams();
+                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                b.setLayoutParams(params);
+                b.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                Item it = items.get(position);
+                int imageId = MainActivity.this.getResources().getIdentifier(it.getImageName(), "drawable", getPackageName());
+                if (imageId > 0) {
+                    Drawable new_image = MainActivity.this.getResources().getDrawable(imageId);
+                    b.setBackgroundDrawable(new_image);
+                }
+
+                b.setOnClickListener(new ImageButtonClickListener(self, it));
             } else {
-                button = (Button) convertView;
+                b = (ImageButton) convertView;
             }
 
-            return button;
+            return b;
         }
     }
 }

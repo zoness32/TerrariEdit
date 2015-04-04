@@ -5,19 +5,29 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
 
-        <ImageView
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/itemImage"
-            android:layout_weight=".2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="5dp" />
+            android:minHeight="48dp"
+            android:minWidth="48dp"
+            android:id="@+id/frameLayout">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemImage"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerInside"
+                android:nestedScrollingEnabled="true"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,48 +35,44 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/itemName"
-            android:layout_weight=".8"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:clickable="true" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:inputType="number"
-            android:id="@+id/countTextEdit"
-            android:layout_marginLeft="20dp"
-            android:selectAllOnFocus="true"
-            android:text="999"
-            android:textIsSelectable="true"
-            android:layout_gravity="bottom"
-            android:gravity="bottom" />
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:id="@+id/prefixSpinner"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight=".5"
-            android:layout_gravity="bottom"
-            android:spinnerMode="dropdown" />
+            android:clickable="true"
+            android:layout_alignParentLeft="false"
+            android:layout_toRightOf="@+id/frameLayout"
+            android:layout_alignBottom="@+id/frameLayout" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:text="Edit Item"
-            android:id="@+id/editButton"
-            android:layout_marginRight="20dp"
+            android:id="@+id/itemEdit"
             android:maxLines="1"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="bottom" />
-    </LinearLayout>
+            android:layout_gravity="bottom"
+            android:layout_toRightOf="@+id/itemPrefix"
+            android:layout_below="@+id/frameLayout"
+            android:layout_alignParentRight="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/itemCount"
+            android:selectAllOnFocus="true"
+            android:text="999"
+            android:textIsSelectable="true"
+            android:layout_below="@+id/frameLayout"
+            android:digits="3"
+            android:editable="false" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemPrefix"
+            android:layout_gravity="bottom"
+            android:spinnerMode="dropdown"
+            android:layout_toRightOf="@+id/itemCount"
+            android:nestedScrollingEnabled="true"
+            android:minWidth="100dp"
+            android:layout_below="@+id/frameLayout" />
+    </RelativeLayout>
+
 </LinearLayout>
