@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        itemsList = new ArrayList<>();
 
         itemDetailsView = findViewById(R.id.itemDetailsPanel);
 
@@ -65,8 +66,7 @@ public class MainActivity extends ActionBarActivity {
         itemImage = (ImageView) findViewById(R.id.itemImage);
 
         gridview = (GridView) findViewById(R.id.gridView);
-
-        itemsList = new ArrayList<>();
+        gridview.setAdapter(new ImageAdapter(this, itemsList));
     }
 
 
@@ -111,8 +111,8 @@ public class MainActivity extends ActionBarActivity {
         ids.open();
         pds.open();
 
-        for (int i = 0; i < binItems.length; i++) {
-            Item it = ItemParser.ParseItem(binItems[i]);
+        for (byte[] bytes : binItems) {
+            Item it = ItemParser.ParseItem(bytes);
             it.setName(ids.getItemName(Integer.valueOf(it.getId())));
             it.setPrefix(pds.getPrefixName(Integer.valueOf(it.getPrefix())));
             itemsList.add(it);
@@ -142,7 +142,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public class ImageAdapter extends BaseAdapter {
-        private List<ImageButton> buttons;
         private List<Item> items;
         private Context c;
 
@@ -158,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public Object getItem(int position) {
-            return buttons.get(position);
+            return items.get(position);
         }
 
         @Override
@@ -176,10 +175,12 @@ public class MainActivity extends ActionBarActivity {
                 b = (ImageButton) convertView;
             }
 
-            Item it = items.get(position);
-            int imageId = MainActivity.this.getResources().getIdentifier(it.getImageName(), "drawable", getPackageName());
-            b.setImageResource(imageId);
-            b.setOnClickListener(new ImageButtonClickListener(self, it));
+            if (!items.isEmpty()) {
+                Item it = items.get(position);
+                int imageId = MainActivity.this.getResources().getIdentifier(it.getImageName(), "drawable", getPackageName());
+                b.setImageResource(imageId);
+                b.setOnClickListener(new ImageButtonClickListener(self, it));
+            }
 
             return b;
         }
