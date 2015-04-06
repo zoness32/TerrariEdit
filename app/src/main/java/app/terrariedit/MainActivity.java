@@ -171,24 +171,15 @@ public class MainActivity extends ActionBarActivity {
             ImageButton b;
             if (convertView == null) {
                 b = new ImageButton(c);
-                b.setLayoutParams(new GridView.LayoutParams(100, 100));
-                ViewGroup.LayoutParams params = b.getLayoutParams();
-                params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-                b.setLayoutParams(params);
-                b.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-
-                Item it = items.get(position);
-                int imageId = MainActivity.this.getResources().getIdentifier(it.getImageName(), "drawable", getPackageName());
-                if (imageId > 0) {
-                    Drawable new_image = MainActivity.this.getResources().getDrawable(imageId);
-                    b.setBackgroundDrawable(new_image);
-                }
-
-                b.setOnClickListener(new ImageButtonClickListener(self, it));
+                b.setLayoutParams(new GridView.LayoutParams(185, 185));
             } else {
                 b = (ImageButton) convertView;
             }
+
+            Item it = items.get(position);
+            int imageId = MainActivity.this.getResources().getIdentifier(it.getImageName(), "drawable", getPackageName());
+            b.setImageResource(imageId);
+            b.setOnClickListener(new ImageButtonClickListener(self, it));
 
             return b;
         }
