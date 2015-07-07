@@ -16,7 +16,9 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp"
             android:minWidth="48dp"
-            android:id="@+id/frameLayout">
+            android:id="@+id/frameLayout"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -47,7 +49,7 @@
             android:id="@+id/itemEdit"
             android:maxLines="1"
             android:layout_gravity="bottom"
-            android:layout_toRightOf="@+id/itemPrefix"
+            android:layout_toRightOf="@+id/itemSave"
             android:layout_below="@+id/frameLayout"
             android:layout_alignParentRight="true" />
 
@@ -61,7 +63,8 @@
             android:textIsSelectable="true"
             android:layout_below="@+id/frameLayout"
             android:digits="3"
-            android:editable="false" />
+            android:editable="false"
+            android:layout_marginLeft="8dp" />
 
         <Spinner
             android:layout_width="wrap_content"
@@ -69,10 +72,19 @@
             android:id="@+id/itemPrefix"
             android:layout_gravity="bottom"
             android:spinnerMode="dropdown"
-            android:layout_toRightOf="@+id/itemCount"
             android:nestedScrollingEnabled="true"
             android:minWidth="100dp"
-            android:layout_below="@+id/frameLayout" />
+            android:layout_below="@+id/frameLayout"
+            android:layout_toRightOf="@+id/itemCount"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:id="@+id/itemSave"
+            android:layout_below="@+id/itemName"
+            android:layout_toRightOf="@+id/itemPrefix" />
     </RelativeLayout>
 
 </LinearLayout>

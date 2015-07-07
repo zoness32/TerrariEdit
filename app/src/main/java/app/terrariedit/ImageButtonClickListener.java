@@ -17,14 +17,18 @@ public class ImageButtonClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        a.itemNameText.setText(i.getName());
-        a.itemCountText.setText(i.getCount());
-        int imageId = a.getResources().getIdentifier(i.getImageName(), "drawable", a.getPackageName());
-        if (imageId > 0) {
-            Drawable new_image = a.getResources().getDrawable(imageId);
-            a.itemImage.setBackgroundDrawable(new_image);
+        if (i.isEmpty()) {
+            a.itemCountText.setText("0");
+            a.itemImage.setImageResource(0);
+            a.itemNameText.setText("Empty item slot");
         } else {
-            a.itemImage.setBackgroundDrawable(null);
+            a.itemNameText.setText(i.getName());
+            a.itemCountText.setText(i.getCount());
+            int imageId = a.getResources().getIdentifier(i.getImageName(), "drawable", a.getPackageName());
+            if (imageId > 0) {
+                a.itemImage.setImageResource(imageId);
+            }
         }
+        a.setSelectedItemLoc(i.getGridPosition());
     }
 }

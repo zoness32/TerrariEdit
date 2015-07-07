@@ -8,14 +8,28 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_init_db"
-        android:title="Init DB"
+        android:id="@+id/action_save"
+        android:title="Save"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_open_file"
+        android:title="Open test"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_open_file_2"
+        android:title="Open test2"
         android:orderInCategory="2"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_open_file"
-        android:title="Open File"
-        android:orderInCategory="1"
-        app:showAsAction="ifRoom"
-        />
+        android:id="@+id/action_root"
+        android:title="Root"
+        android:orderInCategory="3"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_init_db"
+        android:title="Init DB"
+        android:orderInCategory="4"
+        app:showAsAction="never" />
 </menu>

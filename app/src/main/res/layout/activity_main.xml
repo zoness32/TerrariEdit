@@ -25,13 +25,13 @@
             android:id="@+id/gridView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
             android:gravity="center"
-            android:horizontalSpacing="5dp"
+            android:horizontalSpacing="8dp"
             android:longClickable="true"
             android:numColumns="5"
-            android:verticalSpacing="5dp" >
+            android:verticalSpacing="8dp" >
         </GridView>
 
     </LinearLayout>

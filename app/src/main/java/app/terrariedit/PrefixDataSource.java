@@ -12,7 +12,8 @@ import android.util.Log;
 public class PrefixDataSource {
     private SQLiteDatabase database;
     private DataBaseHelper dbHelper;
-    private String[] allPrefixColumns = {TerrariEditDbHelper.COLUMN_PREFIX_NAME};
+    private String[] prefixNameColumn = {TerrariEditDbHelper.COLUMN_PREFIX_NAME};
+    private String[] prefixIdColumn = {TerrariEditDbHelper.COLUMN_PREFIX_ID};
 
     public PrefixDataSource(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -31,7 +32,7 @@ public class PrefixDataSource {
             String[] prefixid = {Integer.toString(prefixId)};
             Cursor cursor = null;
             cursor = database.query(TerrariEditDbHelper.TABLE_PREFIX,
-                    allPrefixColumns, "prefix_id=?", prefixid, null, null, null);
+                    prefixNameColumn, "prefix_id=?", prefixid, null, null, null);
             String name = "";
 
             if (cursor.getCount() > 0) {
@@ -46,5 +47,23 @@ public class PrefixDataSource {
         } else {
             return "";
         }
+    }
+
+    public String getPrefixId(String prefix) {
+        String[] prefixName = {prefix};
+        Cursor cursor = null;
+        cursor = database.query(TerrariEditDbHelper.TABLE_PREFIX,
+                prefixIdColumn, "prefix_id=?", prefixName, null, null, null);
+        String prefixId = "";
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            prefixId = cursor.getString(0);
+        } else {
+            Log.d("Empty Cursor", "COULD NOT FIND PREFIX ID FOR PREFIX " + prefix);
+        }
+
+        cursor.close();
+        return prefixId;
     }
 }

@@ -3,6 +3,8 @@ package app.terrariedit;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -10,17 +12,17 @@ import java.io.InputStream;
  * Created by teernisse on 3/23/2015.
  */
 public class PlayerFileParser {
-    private static String playerFile = "test.player";
     private Context context;
 
     public PlayerFileParser(Context c) {
         context = c;
     }
 
-    public byte[] readFile() throws IOException {
+    public byte[] readFile(String filename) throws IOException {
         byte[] buffer = new byte[2048];
-        InputStream input = context.getAssets().open(playerFile);
-        input.read(buffer);
+        FileInputStream fis = context.openFileInput(filename);
+        fis.read(buffer);
+        fis.close();
 
         return buffer;
     }
